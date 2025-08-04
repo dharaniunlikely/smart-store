@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Dress</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 { text-align: center; color: #e91e63; }
+    label { display: block; margin-top: 10px; }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 15px;
+      width: 100%;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Order Details</h2>
+    <form id="orderForm" onsubmit="sendWhatsApp(); return false;">
+      <label>Dress Name:</label>
+      <input type="text" id="dressName" readonly>
+
+      <label>Price (₹):</label>
+      <input type="text" id="price" readonly>
+
+      <label>Your Name:</label>
+      <input type="text" id="customerName" required>
+
+      <label>Address:</label>
+      <textarea id="address" required></textarea>
+
+      <button type="submit" class="btn">Place Order on WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    // Fill dress details from URL
+    const url = new URLSearchParams(window.location.search);
+    document.getElementById("dressName").value = url.get("name");
+    document.getElementById("price").value = url.get("price");
+
+    function sendWhatsApp() {
+      const name = document.getElementById("customerName").value;
+      const address = document.getElementById("address").value;
+      const dress = document.getElementById("dressName").value;
+      const price = document.getElementById("price").value;
+
+      const message = `Order Details:%0A👗 Dress: ${dress}%0A💵 Price: ₹${price}%0A👤 Name: ${name}%0A🏠 Address: ${address}`;
+      
+      const phone = "918667684214"; // 🔁 Replace with your WhatsApp number
+      const url = `https://wa.me/${phone}?text=${message}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
